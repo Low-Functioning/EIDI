@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏆 ABIR's Eidi Winners List</title>
+    <style>
+        :root { 
+            --emerald: #064e3b; 
+            --gold: #fbbf24; 
+            --cream: #fffbeb; 
+            --bkash: #d10069; 
+        }
+
+        body { 
+            font-family: 'Segoe UI', Roboto, sans-serif; 
+            background: radial-gradient(circle at top, #065f46 0%, #011612 100%); 
+            color: var(--cream); 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            padding: 20px; 
+            margin: 0; 
+            min-height: 100vh;
+        }
+
+        .header {
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 40px;
+        }
+
+        .header h1 { font-size: 2.2rem; margin: 0; color: #fff; }
+        .header p { color: var(--gold); letter-spacing: 1px; font-weight: bold; }
+
+        .winners-container {
+            width: 100%;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        .winner-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: 0.3s;
+        }
+
+        .winner-row:last-child { border-bottom: none; }
+        .winner-row:hover { background: rgba(255,255,255,0.03); transform: scale(1.02); }
+
+        .name-info { display: flex; align-items: center; gap: 15px; }
+        .rank-circle {
+            width: 35px;
+            height: 35px;
+            background: var(--gold);
+            color: var(--emerald);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 900;
+            font-size: 0.9rem;
+        }
+
+        .winner-name { font-weight: 600; font-size: 1.1rem; }
+        .winner-amt { 
+            color: var(--gold); 
+            font-weight: 900; 
+            font-size: 1.2rem; 
+            background: rgba(209, 0, 105, 0.1);
+            padding: 5px 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(209, 0, 105, 0.3);
+        }
+
+        .back-btn {
+            margin-top: 30px;
+            text-decoration: none;
+            color: var(--cream);
+            background: var(--bkash);
+            padding: 12px 25px;
+            border-radius: 15px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover { opacity: 0.8; }
+
+        #loading { text-align: center; padding: 40px; font-style: italic; opacity: 0.6; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <p>EID-UL-FITR 2026</p>
+    <h1>🏆 All Salami Winners</h1>
+    <div style="margin-top:10px; font-size: 0.9rem; opacity: 0.7;">Sponsored by the kindhearted <b>Abir</b></div>
+</div>
+
+<div class="winners-container">
+    <div id="loading">Fetching the lucky ones...</div>
+    <div id="fullList"></div>
+</div>
+
+<a href="index.html" class="back-btn">← Back to Claim Page</a>
+
+<script>
+    
+    const URL = "https://script.google.com/macros/s/AKfycbzMFmj0wit6f3KTqHY4uXMM35TqHUZrLBmYxl88Wps2GGat-1Eyenag0Wy6k_WbP6MK7g/exec";
+
+    async function loadWinners() {
+        try {
+            const response = await fetch(URL);
+            const data = await response.json();
+            
+            const listDiv = document.getElementById('fullList');
+            const loadingDiv = document.getElementById('loading');
+            
+            if (data.length === 0) {
+                loadingDiv.innerText = "No winners yet. Be the first!";
+                return;
+            }
+
+            loadingDiv.style.display = "none";
+            let html = "";
+            
+            data.forEach((user, index) => {
+                html += `
+                    <div class="winner-row">
+                        <div class="name-info">
+                            <div class="rank-circle">${index + 1}</div>
+                            <div class="winner-name">${user.name}</div>
+                        </div>
+                        <div class="winner-amt">৳${user.amount}</div>
+                    </div>
+                `;
+            });
+            
+            listDiv.innerHTML = html;
+        } catch (e) {
+            document.getElementById('loading').innerText = "Error loading list. Check connection.";
+        }
+    }
+
+    // Load data when page opens
+    window.onload = loadWinners;
+</script>
+
+</body>
+</html>
