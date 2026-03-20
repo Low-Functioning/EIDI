@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Your Eid Salami From ABIR</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        :root { 
+            --emerald: #064e3b; 
+            --gold: #fbbf24; 
+            --gold-bright: #fff06b;
+            --cream: #fffbeb; 
+            --bkash: #d10069; 
+            --bkash-light: #e2136e; 
+        }
+
+        body { 
+            font-family: 'Segoe UI', Roboto, sans-serif; 
+            background: radial-gradient(circle at top, #065f46 0%, #011612 100%); 
+            color: var(--cream); 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            padding: 20px; 
+            margin: 0; 
+            min-height: 100vh; 
+        }
+
+     
+        .abir-brand { 
+            text-align: center; 
+            margin-bottom: 40px; 
+            position: relative;
+            padding: 10px;
+            background: transparent; 
+            border: none; 
+        }
+
+        .abir-brand h2 { 
+            font-size: 0.75rem; 
+            text-transform: uppercase; 
+            letter-spacing: 5px; 
+            color: var(--gold); 
+            margin-bottom: 5px; 
+            font-weight: 400;
+            opacity: 0.8;
+        }
+
+        .abir-brand h1 { 
+            margin: 0; 
+            font-size: 4.2rem; 
+            font-weight: 900;
+            background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 15px rgba(251, 191, 36, 0.4));
+            letter-spacing: 10px;
+            position: relative;
+            animation: shine 4s infinite linear;
+            background-size: 200% auto;
+        }
+
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+
+       
+        .abir-brand::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 150%; height: 100%;
+            background: radial-gradient(circle, rgba(251, 191, 36, 0.12) 0%, transparent 75%);
+            z-index: -1;
+            filter: blur(30px);
+        }
+
+        .heart-tag { 
+            margin-top: 15px;
+            background: linear-gradient(45deg, var(--bkash), var(--bkash-light)); 
+            padding: 8px 25px; 
+            border-radius: 50px; 
+            font-size: 0.9rem; 
+            font-weight: 700; 
+            display: inline-block; 
+            box-shadow: 0 10px 20px rgba(209, 0, 105, 0.3);
+            border: 1px solid rgba(255,255,255,0.3);
+            animation: pulseSoft 2.5s infinite; 
+        }
+
+        @keyframes pulseSoft {
+            0% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.9; }
+        }
+        /* ------------------------- */
+
+        .card { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 30px; padding: 35px; width: 100%; max-width: 380px; text-align: center; backdrop-filter: blur(20px); box-shadow: 0 25px 60px rgba(0,0,0,0.6); }
+        input { width: 100%; padding: 18px; margin: 15px 0; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); font-size: 1rem; box-sizing: border-box; background: rgba(255,255,255,0.95); color: #111; outline: none; font-weight: 600; }
+        
+        .btn-main { width: 100%; padding: 18px; border-radius: 16px; border: none; font-weight: 900; cursor: pointer; background: linear-gradient(45deg, var(--bkash), #ff3d9a); color: white; font-size: 1.1rem; text-transform: uppercase; transition: 0.4s; letter-spacing: 1px; }
+        .btn-main:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(209, 0, 105, 0.4); }
+        
+        #modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.94); justify-content: center; align-items: center; z-index: 100; backdrop-filter: blur(12px); }
+        .modal-content { background: var(--cream); color: #111; padding: 45px 35px; border-radius: 40px; width: 88%; max-width: 360px; text-align: center; border-bottom: 15px solid var(--bkash); box-shadow: 0 0 50px rgba(209, 0, 105, 0.3); }
+        
+        .amt { font-size: 4.5rem; font-weight: 900; color: var(--bkash); margin: 15px 0; letter-spacing: -2px; }
+        .bkash-btn { background: var(--bkash); color: white; border: none; width: 100%; padding: 18px; border-radius: 16px; font-weight: 900; cursor: pointer; margin-top: 15px; }
+        
+        .leaderboard { margin-top: 50px; width: 100%; max-width: 380px; background: rgba(0,0,0,0.3); border-radius: 25px; padding: 20px; text-align: center; border: 1px solid rgba(251, 191, 36, 0.1); }
+        .lb-row { display: flex; justify-content: space-between; padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: left; }
+        
+        .full-lb-link { display: inline-block; margin-top: 15px; color: var(--gold); text-decoration: none; font-size: 0.9rem; font-weight: bold; opacity: 0.8; transition: 0.3s; }
+        .full-lb-link:hover { opacity: 1; color: #fff; }
+        
+        .footer-tag { margin: 60px 0 20px; font-size: 0.7rem; opacity: 0.3; letter-spacing: 2px; font-weight: 600; text-transform: uppercase; text-align: center; }
+    </style>
+</head>
+<body>
+
+<audio id="winSound" src="https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3"></audio>
+<audio id="trollSound" src="https://www.myinstants.com/media/sounds/sad-trombone.mp3"></audio>
+
+<div class="abir-brand">
+    <h2>GET YOUR EIDI FROM</h2>
+    <h1>ABIR</h1>
+    <div class="heart-tag">Spread Love 💕️</div>
+</div>
+
+<div class="card">
+    <h3 style="margin:0; color:var(--gold); font-size: 1.4rem;">Claim Your Salami 🌙</h3>
+    <p style="opacity:0.7; font-size: 0.85rem; margin-top: 8px;">Put Your bKash Number Only</p>
+    <input type="text" id="nameIn" placeholder="Enter Your Name">
+    <button class="btn-main" onclick="spinNow()">Reveal Salami</button>
+</div>
+
+<div id="modal">
+    <div class="modal-content">
+        <h2 id="greetHead" style="margin:0; color: var(--emerald); font-weight: 900;">EID MUBARAK!</h2>
+        <p id="msgText" style="margin: 5px 0; color: #666; font-weight: 500;">Abir sent you a gift:</p>
+        <div class="amt" id="amtOut">৳ 0</div>
+        <input type="number" id="bkIn" placeholder="Your bKash Number">
+        <button class="bkash-btn" id="subBtn" onclick="submitRequest()">CLAIM NOW</button>
+    </div>
+</div>
+
+<div class="leaderboard">
+    <h3 style="color:var(--gold); margin-top:0; font-size: 1.1rem; letter-spacing: 1px;">🏆 Recent Winners</h3>
+    <div id="lbList">Loading...</div>
+    <a href="winners.html" class="full-lb-link">View All Results ➔</a>
+</div>
+
+<div class="footer-tag">Funded by the Generosity of ABIR &copy; 2026</div>
+
+<script>
+    const URL = "https://script.google.com/macros/s/AKfycbzMFmj0wit6f3KTqHY4uXMM35TqHUZrLBmYxl88Wps2GGat-1Eyenag0Wy6k_WbP6MK7g/exec"; 
+    let state = { name: "", amount: 0, ip: "", status: "Valid" };
+
+    function fireCelebration() {
+        confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 }, colors: ['#d10069', '#fbbf24', '#ffffff'] });
+    }
+
+    function addNaturalJitter(base) {
+        if (base === 6.9) return base;
+        let jitter = Math.floor(Math.random() * 7) + 1;
+        let coinFlip = Math.random() > 0.5 ? 1 : -1;
+        let result = base + (jitter * coinFlip);
+        return result < 5 ? 5 : result;
+    }
+
+    async function spinNow() {
+        state.name = document.getElementById('nameIn').value.trim();
+        if(!state.name) return alert("Please enter name!");
+
+        try {
+            const r = await fetch('https://api.ipify.org?format=json');
+            const d = await r.json();
+            state.ip = d.ip;
+        } catch(e) { state.ip = "Unknown"; }
+
+        let spinCount = parseInt(localStorage.getItem('count_' + state.ip) || 0);
+
+        if (spinCount >= 2) {
+            state.amount = 10;
+            state.status = "Blocked";
+            document.getElementById('greetHead').innerText = "Blocked!";
+            document.getElementById('msgText').innerText = "areeh beta beshi spin korar jonno tomake block kora holo!";
+            document.getElementById('msgText').style.color = "red";
+            document.getElementById('trollSound').play();
+            fireCelebration();
+        } else {
+            calculateLogic();
+            if(state.amount === 6.9) document.getElementById('trollSound').play();
+            else { document.getElementById('winSound').play(); fireCelebration(); }
+        }
+
+        document.getElementById('amtOut').innerText = "৳ " + state.amount;
+        document.getElementById('modal').style.display = "flex";
+        localStorage.setItem('count_' + state.ip, spinCount + 1);
+    }
+
+    function calculateLogic() {
+        const n = state.name.toLowerCase();
+        const isF = n.endsWith('a') || n.endsWith('i') || n.endsWith('y') || n.includes('mim') || n.includes('nusrat');
+        const r = Math.random() * 100;
+        let base = 0;
+
+        if(!isF) {
+            if(r < 6.9) base = 6.9;
+            else if(r < 20) base = 10;
+            else if(r < 70) base = 20;
+            else if(r < 90) base = 25;
+            else if(r < 91) base = 50;
+            else base = 30;
+        } else {
+            if(r < 50) base = 30;
+            else if(r < 80) base = 25;
+            else if(r < 90) base = 20;
+            else base = Math.floor(Math.random() * (60 - 15 + 1)) + 15;
+        }
+        state.amount = addNaturalJitter(base);
+    }
+
+    async function submitRequest() {
+        const bk = document.getElementById('bkIn').value;
+        if(bk.length < 11) return alert("Enter 11 digit bKash number!");
+        document.getElementById('subBtn').innerText = "PROCESSING...";
+        document.getElementById('subBtn').disabled = true;
+        await fetch(URL, { method: "POST", mode: "no-cors", body: JSON.stringify({...state, bkash: bk}) });
+        alert("Abir is sending ৳" + state.amount + " to your bKash!");
+        location.reload();
+    }
+
+    fetch(URL).then(r => r.json()).then(data => {
+        let h = "";
+        data.slice(0, 5).forEach(x => h += `<div class="lb-row"><span>${x.name}</span><b>৳${x.amount}</b></div>`);
+        document.getElementById('lbList').innerHTML = h || "No winners yet!";
+    }).catch(e => document.getElementById('lbList').innerHTML = "Ready for winners!");
+</script>
+</body>
+</html>
