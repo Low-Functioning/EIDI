@@ -3,156 +3,281 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🏆 ABIR's Eidi Winners List</title>
+    <title>🏆 ABIR's Eidi Winners — Eid-ul-Adha 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        :root { 
-            --emerald: #064e3b; 
-            --gold: #fbbf24; 
-            --cream: #fffbeb; 
-            --bkash: #d10069; 
+        :root {
+            --crimson:   #7f1d1d;
+            --crimson-mid: #991b1b;
+            --crimson-bright: #dc2626;
+            --gold:      #f59e0b;
+            --gold-pale: #fde68a;
+            --sand:      #fdf6e3;
+            --bkash:     #d10069;
+            --text-light: #fef3c7;
+            --glass-bg:  rgba(255,255,255,0.06);
+            --glass-border: rgba(255,255,255,0.12);
         }
 
-        body { 
-            font-family: 'Segoe UI', Roboto, sans-serif; 
-            background: radial-gradient(circle at top, #065f46 0%, #011612 100%); 
-            color: var(--cream); 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            padding: 20px; 
-            margin: 0; 
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #1a0a00;
+            color: var(--text-light);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 28px 16px 60px;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        .header {
+        /* Background */
+        body::before {
+            content: '';
+            position: fixed; inset: 0; z-index: -2;
+            background:
+                radial-gradient(ellipse 80% 55% at 50% -5%, #7f1d1d 0%, transparent 60%),
+                radial-gradient(ellipse 55% 45% at 15% 90%, #451006 0%, transparent 55%),
+                radial-gradient(ellipse 55% 45% at 85% 88%, #3b0a0a 0%, transparent 55%),
+                #100500;
+        }
+        body::after {
+            content: '';
+            position: fixed; inset: 0; z-index: -1;
+            opacity: 0.04;
+            background-image:
+                repeating-linear-gradient(60deg, var(--gold) 0, var(--gold) 1px, transparent 0, transparent 50%),
+                repeating-linear-gradient(120deg, var(--gold) 0, var(--gold) 1px, transparent 0, transparent 50%);
+            background-size: 50px 50px;
+        }
+
+        /* ── Header ── */
+        .page-header {
             text-align: center;
-            margin-top: 30px;
-            margin-bottom: 40px;
+            margin: 20px 0 40px;
         }
 
-        .header h1 { font-size: 2.2rem; margin: 0; color: #fff; }
-        .header p { color: var(--gold); letter-spacing: 1px; font-weight: bold; }
+        .event-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            color: var(--gold);
+            font-weight: 700;
+            opacity: 0.75;
+            margin-bottom: 10px;
+        }
 
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.4rem;
+            font-weight: 900;
+            color: #fff;
+            line-height: 1.15;
+        }
+
+        .page-sub {
+            margin-top: 10px;
+            font-size: 0.88rem;
+            opacity: 0.6;
+        }
+        .page-sub b { color: var(--gold); opacity: 1; }
+
+        /* Ornament */
+        .ornament {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 20px 0 28px;
+            color: var(--gold);
+            opacity: 0.3;
+            width: 100%;
+            max-width: 500px;
+        }
+        .ornament::before, .ornament::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--gold);
+        }
+        .ornament span { font-size: 1rem; white-space: nowrap; }
+
+        /* ── Winners Container ── */
         .winners-container {
             width: 100%;
             max-width: 500px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 25px;
-            padding: 20px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            background: var(--glass-bg);
+            backdrop-filter: blur(18px);
+            border: 1px solid var(--glass-border);
+            border-radius: 28px;
+            padding: 8px 16px;
+            box-shadow: 0 24px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.08);
         }
 
         .winner-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px;
+            padding: 16px 10px;
             border-bottom: 1px solid rgba(255,255,255,0.05);
-            transition: 0.3s;
+            transition: background 0.25s;
+            border-radius: 12px;
         }
-
         .winner-row:last-child { border-bottom: none; }
-        .winner-row:hover { background: rgba(255,255,255,0.03); transform: scale(1.02); }
+        .winner-row:hover { background: rgba(255,255,255,0.04); }
 
-        .name-info { display: flex; align-items: center; gap: 15px; }
-        .rank-circle {
-            width: 35px;
-            height: 35px;
-            background: var(--gold);
-            color: var(--emerald);
+        .name-info { display: flex; align-items: center; gap: 14px; }
+
+        .rank-badge {
+            width: 36px; height: 36px;
             border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            display: flex; justify-content: center; align-items: center;
+            font-weight: 900; font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+        .rank-badge.gold-rank {
+            background: linear-gradient(135deg, #f59e0b, #fde68a);
+            color: #7f1d1d;
+            box-shadow: 0 4px 12px rgba(245,158,11,0.4);
+        }
+        .rank-badge.silver-rank {
+            background: linear-gradient(135deg, #9ca3af, #e5e7eb);
+            color: #374151;
+        }
+        .rank-badge.bronze-rank {
+            background: linear-gradient(135deg, #b45309, #d97706);
+            color: #fff;
+        }
+        .rank-badge.default-rank {
+            background: rgba(255,255,255,0.1);
+            color: var(--text-light);
+            border: 1px solid rgba(255,255,255,0.12);
+        }
+
+        .winner-name { font-weight: 600; font-size: 1.05rem; }
+
+        .winner-amt {
+            color: var(--gold);
             font-weight: 900;
-            font-size: 0.9rem;
-        }
-
-        .winner-name { font-weight: 600; font-size: 1.1rem; }
-        .winner-amt { 
-            color: var(--gold); 
-            font-weight: 900; 
-            font-size: 1.2rem; 
-            background: rgba(209, 0, 105, 0.1);
-            padding: 5px 12px;
+            font-size: 1.15rem;
+            background: rgba(245,158,11,0.1);
+            padding: 5px 14px;
             border-radius: 10px;
-            border: 1px solid rgba(209, 0, 105, 0.3);
+            border: 1px solid rgba(245,158,11,0.2);
+            white-space: nowrap;
         }
 
+        /* ── Back Button ── */
         .back-btn {
-            margin-top: 30px;
+            margin-top: 32px;
             text-decoration: none;
-            color: var(--cream);
-            background: var(--bkash);
-            padding: 12px 25px;
-            border-radius: 15px;
-            font-weight: bold;
-            transition: 0.3s;
+            color: #fff;
+            background: linear-gradient(135deg, #9b1c1c 0%, var(--bkash) 100%);
+            padding: 14px 30px;
+            border-radius: 16px;
+            font-weight: 700;
+            font-family: 'DM Sans', sans-serif;
+            letter-spacing: 0.5px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 8px 20px rgba(209,0,105,0.3);
+        }
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px rgba(209,0,105,0.45);
         }
 
-        .back-btn:hover { opacity: 0.8; }
+        #loading {
+            text-align: center;
+            padding: 40px;
+            font-style: italic;
+            opacity: 0.55;
+            font-size: 0.95rem;
+        }
 
-        #loading { text-align: center; padding: 40px; font-style: italic; opacity: 0.6; }
+        /* ── Footer ── */
+        .footer-tag {
+            margin: 52px 0 16px;
+            font-size: 0.68rem;
+            opacity: 0.28;
+            letter-spacing: 2.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
 
-<div class="header">
-    <p>EID-UL-FITR 2026</p>
-    <h1>🏆 All Salami Winners</h1>
-    <div style="margin-top:10px; font-size: 0.9rem; opacity: 0.7;">Sponsored by the kindhearted <b>Abir</b></div>
+<div class="page-header">
+    <p class="event-label">✦ Eid-ul-Adha 2026 ✦</p>
+    <h1 class="page-title">🏆 All Salami Winners</h1>
+    <p class="page-sub">Sponsored by the kindhearted <b>Abir</b> 🐑</p>
 </div>
 
+<div class="ornament"><span>✦ ✦ ✦</span></div>
+
 <div class="winners-container">
-    <div id="loading">Fetching the lucky ones...</div>
+    <div id="loading">Fetching the lucky ones... 🎊</div>
     <div id="fullList"></div>
 </div>
 
 <a href="index.html" class="back-btn">← Back to Claim Page</a>
 
+<div class="footer-tag">Funded by the Generosity of ABIR &copy; 2026</div>
+
 <script>
-    
     const URL = "https://script.google.com/macros/s/AKfycbzp-QvyP2fpHuD94K1g_dIQsOZV294U515Wwznk4z9_TAU-VHkUQaCFjs8JL17wtIj_zQ/exec";
+
+    function getRankClass(index) {
+        if (index === 0) return 'gold-rank';
+        if (index === 1) return 'silver-rank';
+        if (index === 2) return 'bronze-rank';
+        return 'default-rank';
+    }
+
+    function getRankEmoji(index) {
+        if (index === 0) return '🥇';
+        if (index === 1) return '🥈';
+        if (index === 2) return '🥉';
+        return index + 1;
+    }
 
     async function loadWinners() {
         try {
             const response = await fetch(URL);
             const data = await response.json();
-            
-            const listDiv = document.getElementById('fullList');
+
+            const listDiv    = document.getElementById('fullList');
             const loadingDiv = document.getElementById('loading');
-            
-            if (data.length === 0) {
-                loadingDiv.innerText = "No winners yet. Be the first!";
+
+            if (!data || data.length === 0) {
+                loadingDiv.innerText = "No winners yet — be the first! 🎉";
                 return;
             }
 
             loadingDiv.style.display = "none";
             let html = "";
-            
+
             data.forEach((user, index) => {
                 html += `
                     <div class="winner-row">
                         <div class="name-info">
-                            <div class="rank-circle">${index + 1}</div>
+                            <div class="rank-badge ${getRankClass(index)}">${getRankEmoji(index)}</div>
                             <div class="winner-name">${user.name}</div>
                         </div>
                         <div class="winner-amt">৳${user.amount}</div>
                     </div>
                 `;
             });
-            
+
             listDiv.innerHTML = html;
         } catch (e) {
-            document.getElementById('loading').innerText = "Error loading list. Check connection.";
+            document.getElementById('loading').innerText = "Error loading list. Check your connection.";
         }
     }
 
-    // Load data when page opens
     window.onload = loadWinners;
 </script>
-
 </body>
 </html>
