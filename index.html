@@ -3,176 +3,458 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Get Your Eid Salami From ABIR</title>
+    <title>Get Your Eid Salami From ABIR 🐑</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        :root { 
-            --emerald: #064e3b; 
-            --gold: #fbbf24; 
-            --gold-bright: #fff06b;
-            --cream: #fffbeb; 
-            --bkash: #d10069; 
-            --bkash-light: #e2136e; 
+        :root {
+            --crimson:   #7f1d1d;
+            --crimson-mid: #991b1b;
+            --crimson-bright: #dc2626;
+            --gold:      #f59e0b;
+            --gold-pale: #fde68a;
+            --gold-shine: #fff5c3;
+            --sand:      #fdf6e3;
+            --bkash:     #d10069;
+            --bkash-light: #e2136e;
+            --text-light: #fef3c7;
+            --glass-bg:  rgba(255,255,255,0.07);
+            --glass-border: rgba(255,255,255,0.14);
         }
 
-        body { 
-            font-family: 'Segoe UI', Roboto, sans-serif; 
-            background: radial-gradient(circle at top, #065f46 0%, #011612 100%); 
-            color: var(--cream); 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            padding: 20px; 
-            margin: 0; 
-            min-height: 100vh; 
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #1a0a00;
+            color: var(--text-light);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 28px 16px 60px;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
-     
-        .abir-brand { 
-            text-align: center; 
-            margin-bottom: 40px; 
+        /* ── Background Layers ── */
+        body::before {
+            content: '';
+            position: fixed; inset: 0; z-index: -3;
+            background:
+                radial-gradient(ellipse 80% 60% at 50% -10%, #7f1d1d 0%, transparent 60%),
+                radial-gradient(ellipse 60% 50% at 20% 90%, #451006 0%, transparent 55%),
+                radial-gradient(ellipse 60% 50% at 80% 85%, #3b0a0a 0%, transparent 55%),
+                #100500;
+        }
+
+        /* Subtle geometric pattern overlay */
+        body::after {
+            content: '';
+            position: fixed; inset: 0; z-index: -2;
+            opacity: 0.04;
+            background-image:
+                repeating-linear-gradient(60deg, var(--gold) 0, var(--gold) 1px, transparent 0, transparent 50%),
+                repeating-linear-gradient(120deg, var(--gold) 0, var(--gold) 1px, transparent 0, transparent 50%);
+            background-size: 50px 50px;
+        }
+
+        /* ── Floating Lanterns ── */
+        .lanterns { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
+        .lantern {
+            position: absolute;
+            width: 8px; height: 12px;
+            background: radial-gradient(circle, var(--gold) 0%, transparent 80%);
+            border-radius: 50%;
+            animation: floatUp var(--dur, 10s) linear var(--delay, 0s) infinite;
+            opacity: 0;
+        }
+        @keyframes floatUp {
+            0%   { transform: translateY(100vh) translateX(0); opacity: 0; }
+            10%  { opacity: 0.7; }
+            90%  { opacity: 0.4; }
+            100% { transform: translateY(-100px) translateX(var(--drift, 30px)); opacity: 0; }
+        }
+
+        /* ── ABIR Brand ── */
+        .abir-brand {
+            text-align: center;
+            margin-bottom: 38px;
             position: relative;
-            padding: 10px;
-            background: transparent; 
-            border: none; 
+            padding: 12px 0;
         }
 
-        .abir-brand h2 { 
-            font-size: 0.75rem; 
-            text-transform: uppercase; 
-            letter-spacing: 5px; 
-            color: var(--gold); 
-            margin-bottom: 5px; 
-            font-weight: 400;
-            opacity: 0.8;
+        .abir-eyebrow {
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            color: var(--gold);
+            font-weight: 700;
+            opacity: 0.75;
+            margin-bottom: 6px;
         }
 
-        .abir-brand h1 { 
-            margin: 0; 
-            font-size: 4.2rem; 
+        .abir-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
             font-weight: 900;
-            background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            line-height: 1;
+            background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 30%, #b38728 55%, #fbf5b7 75%, #aa771c 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 15px rgba(251, 191, 36, 0.4));
-            letter-spacing: 10px;
-            position: relative;
-            animation: shine 4s infinite linear;
-            background-size: 200% auto;
+            filter: drop-shadow(0 0 18px rgba(245,158,11,0.45));
+            letter-spacing: 8px;
+            animation: goldShine 5s infinite linear;
+            background-size: 250% auto;
         }
 
-        @keyframes shine {
-            to { background-position: 200% center; }
-        }
+        @keyframes goldShine { to { background-position: 250% center; } }
 
-       
-        .abir-brand::before {
-            content: '';
+        .abir-glow {
             position: absolute;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 150%; height: 100%;
-            background: radial-gradient(circle, rgba(251, 191, 36, 0.12) 0%, transparent 75%);
+            width: 160%; height: 120%;
+            background: radial-gradient(circle, rgba(245,158,11,0.1) 0%, transparent 70%);
+            filter: blur(40px);
             z-index: -1;
-            filter: blur(30px);
         }
 
-        .heart-tag { 
-            margin-top: 15px;
-            background: linear-gradient(45deg, var(--bkash), var(--bkash-light)); 
-            padding: 8px 25px; 
-            border-radius: 50px; 
-            font-size: 0.9rem; 
-            font-weight: 700; 
-            display: inline-block; 
-            box-shadow: 0 10px 20px rgba(209, 0, 105, 0.3);
-            border: 1px solid rgba(255,255,255,0.3);
-            animation: pulseSoft 2.5s infinite; 
+        .event-tag {
+            margin-top: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, var(--crimson) 0%, var(--crimson-bright) 100%);
+            padding: 9px 26px;
+            border-radius: 60px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            box-shadow: 0 8px 24px rgba(220,38,38,0.35);
+            border: 1px solid rgba(255,255,255,0.25);
+            animation: pulseTag 2.8s infinite ease-in-out;
+            letter-spacing: 0.5px;
+        }
+        @keyframes pulseTag {
+            0%,100% { transform: scale(1); box-shadow: 0 8px 24px rgba(220,38,38,0.35); }
+            50%      { transform: scale(1.04); box-shadow: 0 12px 32px rgba(220,38,38,0.5); }
         }
 
-        @keyframes pulseSoft {
-            0% { transform: scale(1); opacity: 0.9; }
-            50% { transform: scale(1.05); opacity: 1; }
-            100% { transform: scale(1); opacity: 0.9; }
+        /* ── Card ── */
+        .card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 32px;
+            padding: 36px 28px;
+            width: 100%;
+            max-width: 390px;
+            text-align: center;
+            backdrop-filter: blur(24px);
+            box-shadow: 0 30px 70px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.1);
         }
-        /* ------------------------- */
 
-        .card { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 30px; padding: 35px; width: 100%; max-width: 380px; text-align: center; backdrop-filter: blur(20px); box-shadow: 0 25px 60px rgba(0,0,0,0.6); }
-        input { width: 100%; padding: 18px; margin: 15px 0; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); font-size: 1rem; box-sizing: border-box; background: rgba(255,255,255,0.95); color: #111; outline: none; font-weight: 600; }
-        
-        .btn-main { width: 100%; padding: 18px; border-radius: 16px; border: none; font-weight: 900; cursor: pointer; background: linear-gradient(45deg, var(--bkash), #ff3d9a); color: white; font-size: 1.1rem; text-transform: uppercase; transition: 0.4s; letter-spacing: 1px; }
-        .btn-main:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(209, 0, 105, 0.4); }
-        
-        #modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.94); justify-content: center; align-items: center; z-index: 100; backdrop-filter: blur(12px); }
-        .modal-content { background: var(--cream); color: #111; padding: 45px 35px; border-radius: 40px; width: 88%; max-width: 360px; text-align: center; border-bottom: 15px solid var(--bkash); box-shadow: 0 0 50px rgba(209, 0, 105, 0.3); }
-        
-        .amt { font-size: 4.5rem; font-weight: 900; color: var(--bkash); margin: 15px 0; letter-spacing: -2px; }
-        .bkash-btn { background: var(--bkash); color: white; border: none; width: 100%; padding: 18px; border-radius: 16px; font-weight: 900; cursor: pointer; margin-top: 15px; }
-        
-        .leaderboard { margin-top: 50px; width: 100%; max-width: 380px; background: rgba(0,0,0,0.3); border-radius: 25px; padding: 20px; text-align: center; border: 1px solid rgba(251, 191, 36, 0.1); }
-        .lb-row { display: flex; justify-content: space-between; padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: left; }
-        
-        .full-lb-link { display: inline-block; margin-top: 15px; color: var(--gold); text-decoration: none; font-size: 0.9rem; font-weight: bold; opacity: 0.8; transition: 0.3s; }
-        .full-lb-link:hover { opacity: 1; color: #fff; }
-        
-        .footer-tag { margin: 60px 0 20px; font-size: 0.7rem; opacity: 0.3; letter-spacing: 2px; font-weight: 600; text-transform: uppercase; text-align: center; }
+        .card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--gold);
+            margin-bottom: 6px;
+        }
+
+        .card-sub { font-size: 0.82rem; opacity: 0.6; margin-bottom: 4px; }
+
+        input {
+            width: 100%;
+            padding: 17px 18px;
+            margin: 14px 0 6px;
+            border-radius: 16px;
+            border: 1.5px solid rgba(255,255,255,0.12);
+            font-size: 1rem;
+            font-family: 'DM Sans', sans-serif;
+            background: rgba(255,255,255,0.92);
+            color: #1a0a00;
+            outline: none;
+            font-weight: 600;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(245,158,11,0.15);
+        }
+
+        .btn-main {
+            width: 100%;
+            padding: 18px;
+            margin-top: 10px;
+            border-radius: 16px;
+            border: none;
+            font-weight: 900;
+            cursor: pointer;
+            background: linear-gradient(135deg, #9b1c1c 0%, var(--bkash) 100%);
+            color: white;
+            font-size: 1.05rem;
+            font-family: 'DM Sans', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 8px 24px rgba(209,0,105,0.35);
+        }
+        .btn-main:hover { transform: translateY(-3px); box-shadow: 0 16px 36px rgba(209,0,105,0.5); }
+        .btn-main:active { transform: translateY(0); }
+
+        /* ── Modal ── */
+        #modal {
+            display: none;
+            position: fixed; inset: 0;
+            background: rgba(10,2,0,0.92);
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            backdrop-filter: blur(14px);
+        }
+
+        .modal-content {
+            background: var(--sand);
+            color: #1a0a00;
+            padding: 44px 32px 36px;
+            border-radius: 40px;
+            width: 90%;
+            max-width: 360px;
+            text-align: center;
+            border-bottom: 14px solid var(--bkash);
+            box-shadow: 0 0 60px rgba(209,0,105,0.25), 0 0 0 1px rgba(245,158,11,0.2);
+            position: relative;
+            animation: modalPop 0.4s cubic-bezier(0.34,1.56,0.64,1);
+        }
+        @keyframes modalPop { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        .modal-emoji { font-size: 3rem; display: block; margin-bottom: 8px; }
+
+        .modal-head {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--crimson-mid);
+            margin-bottom: 4px;
+        }
+
+        .modal-sub { font-size: 0.9rem; color: #6b4423; font-weight: 500; margin-bottom: 4px; }
+
+        .amt {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.8rem;
+            font-weight: 900;
+            color: var(--bkash);
+            margin: 10px 0;
+            letter-spacing: -2px;
+            line-height: 1;
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 16px;
+            margin-top: 14px;
+            border-radius: 14px;
+            border: 1.5px solid rgba(0,0,0,0.12);
+            font-size: 1rem;
+            font-family: 'DM Sans', sans-serif;
+            background: #fff;
+            color: #1a0a00;
+            font-weight: 600;
+            outline: none;
+        }
+
+        .bkash-btn {
+            background: linear-gradient(135deg, var(--bkash) 0%, #ff3d9a 100%);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 17px;
+            border-radius: 14px;
+            font-weight: 900;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 14px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: opacity 0.3s;
+        }
+        .bkash-btn:hover { opacity: 0.88; }
+
+        .modal-close {
+            position: absolute;
+            top: 16px; right: 20px;
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.2s;
+        }
+        .modal-close:hover { color: var(--crimson-mid); }
+
+        /* ── Leaderboard ── */
+        .leaderboard {
+            margin-top: 48px;
+            width: 100%;
+            max-width: 390px;
+            background: rgba(0,0,0,0.35);
+            border: 1px solid rgba(245,158,11,0.12);
+            border-radius: 28px;
+            padding: 24px 20px;
+            text-align: center;
+            backdrop-filter: blur(16px);
+        }
+
+        .lb-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--gold);
+            font-size: 1.15rem;
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+        }
+
+        .lb-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .lb-row:last-child { border-bottom: none; }
+
+        .lb-name { font-weight: 600; font-size: 0.95rem; }
+        .lb-amt {
+            color: var(--gold);
+            font-weight: 800;
+            font-size: 1rem;
+            background: rgba(245,158,11,0.1);
+            padding: 3px 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(245,158,11,0.2);
+        }
+
+        .full-lb-link {
+            display: inline-block;
+            margin-top: 16px;
+            color: var(--gold-pale);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 700;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        .full-lb-link:hover { opacity: 1; }
+
+        /* ── Divider ornament ── */
+        .ornament {
+            text-align: center;
+            color: var(--gold);
+            opacity: 0.35;
+            margin: 6px 0;
+            font-size: 1rem;
+            letter-spacing: 6px;
+        }
+
+        /* ── Footer ── */
+        .footer-tag {
+            margin: 56px 0 16px;
+            font-size: 0.68rem;
+            opacity: 0.28;
+            letter-spacing: 2.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
 
+<!-- Floating lanterns -->
+<div class="lanterns" id="lanterns"></div>
+
 <audio id="winSound" src="https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3"></audio>
 <audio id="trollSound" src="https://www.myinstants.com/media/sounds/sad-trombone.mp3"></audio>
 
+<!-- Brand Header -->
 <div class="abir-brand">
-    <h2>GET YOUR EIDI FROM</h2>
-    <h1>ABIR</h1>
-    <div class="heart-tag">Spread Love 💕️</div>
+    <div class="abir-glow"></div>
+    <p class="abir-eyebrow">Get Your Eidi From</p>
+    <h1 class="abir-name">ABIR</h1>
+    <div class="event-tag">🐑 Eid-ul-Adha 2026 &nbsp;·&nbsp; Spread Love 💕</div>
 </div>
 
+<!-- Claim Card -->
 <div class="card">
-    <h3 style="margin:0; color:var(--gold); font-size: 1.4rem;">Claim Your Salami 🌙</h3>
-    <p style="opacity:0.7; font-size: 0.85rem; margin-top: 8px;">Put Your bKash Number Only</p>
-    <input type="text" id="nameIn" placeholder="Enter Your Name">
-    <button class="btn-main" onclick="spinNow()">Reveal Salami</button>
+    <h3 class="card-title">Claim Your Salami 🌙</h3>
+    <p class="card-sub">Enter your name below</p>
+    <div class="ornament">✦ ✦ ✦</div>
+    <input type="text" id="nameIn" placeholder="Your Name">
+    <button class="btn-main" onclick="spinNow()">✨ Reveal Salami</button>
 </div>
 
+<!-- Modal -->
 <div id="modal">
     <div class="modal-content">
-        <h2 id="greetHead" style="margin:0; color: var(--emerald); font-weight: 900;">EID MUBARAK!</h2>
-        <p id="msgText" style="margin: 5px 0; color: #666; font-weight: 500;">Abir sent you a gift:</p>
+        <button class="modal-close" onclick="document.getElementById('modal').style.display='none'">✕</button>
+        <span class="modal-emoji" id="modalEmoji">🎉</span>
+        <h2 class="modal-head" id="greetHead">EID MUBARAK!</h2>
+        <p class="modal-sub" id="msgText">Abir sent you a gift:</p>
         <div class="amt" id="amtOut">৳ 0</div>
-        <input type="number" id="bkIn" placeholder="Your bKash Number">
-        <button class="bkash-btn" id="subBtn" onclick="submitRequest()">CLAIM NOW</button>
+        <input class="modal-input" type="number" id="bkIn" placeholder="Your bKash Number (11 digits)">
+        <button class="bkash-btn" id="subBtn" onclick="submitRequest()">📲 CLAIM NOW</button>
     </div>
 </div>
 
+<!-- Leaderboard -->
 <div class="leaderboard">
-    <h3 style="color:var(--gold); margin-top:0; font-size: 1.1rem; letter-spacing: 1px;">🏆 Recent Winners</h3>
-    <div id="lbList">Loading...</div>
+    <h3 class="lb-title">🏆 Recent Winners</h3>
+    <div id="lbList"><div style="opacity:0.5; padding:20px; font-size:0.9rem;">Loading...</div></div>
     <a href="winners.html" class="full-lb-link">View All Results ➔</a>
 </div>
 
 <div class="footer-tag">Funded by the Generosity of ABIR &copy; 2026</div>
 
 <script>
-    const URL = "https://script.google.com/macros/s/AKfycbzMFmj0wit6f3KTqHY4uXMM35TqHUZrLBmYxl88Wps2GGat-1Eyenag0Wy6k_WbP6MK7g/exec"; 
+    // ── Lanterns ──
+    const lanternsEl = document.getElementById('lanterns');
+    for (let i = 0; i < 18; i++) {
+        const el = document.createElement('div');
+        el.className = 'lantern';
+        el.style.cssText = `
+            left: ${Math.random() * 100}%;
+            --dur: ${8 + Math.random() * 12}s;
+            --delay: ${Math.random() * 15}s;
+            --drift: ${(Math.random() - 0.5) * 80}px;
+            width: ${4 + Math.random() * 8}px;
+            height: ${6 + Math.random() * 10}px;
+        `;
+        lanternsEl.appendChild(el);
+    }
+
+    // ── App Logic ──
+    const URL = "https://script.google.com/macros/s/AKfycbzp-QvyP2fpHuD94K1g_dIQsOZV294U515Wwznk4z9_TAU-VHkUQaCFjs8JL17wtIj_zQ/exec";
     let state = { name: "", amount: 0, ip: "", status: "Valid" };
 
     function fireCelebration() {
-        confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 }, colors: ['#d10069', '#fbbf24', '#ffffff'] });
+        confetti({
+            particleCount: 160,
+            spread: 85,
+            origin: { y: 0.6 },
+            colors: ['#dc2626', '#f59e0b', '#fde68a', '#ffffff', '#d10069']
+        });
     }
 
     function addNaturalJitter(base) {
         if (base === 6.9) return base;
-        let jitter = Math.floor(Math.random() * 7) + 1;
-        let coinFlip = Math.random() > 0.5 ? 1 : -1;
-        let result = base + (jitter * coinFlip);
+        const jitter = Math.floor(Math.random() * 7) + 1;
+        const coinFlip = Math.random() > 0.5 ? 1 : -1;
+        const result = base + (jitter * coinFlip);
         return result < 5 ? 5 : result;
     }
 
     async function spinNow() {
         state.name = document.getElementById('nameIn').value.trim();
-        if(!state.name) return alert("Please enter name!");
+        if (!state.name) return alert("Please enter your name!");
 
         try {
             const r = await fetch('https://api.ipify.org?format=json');
@@ -180,20 +462,36 @@
             state.ip = d.ip;
         } catch(e) { state.ip = "Unknown"; }
 
-        let spinCount = parseInt(localStorage.getItem('count_' + state.ip) || 0);
+        const spinCount = parseInt(localStorage.getItem('count_' + state.ip) || 0);
+
+        const greetEl  = document.getElementById('greetHead');
+        const msgEl    = document.getElementById('msgText');
+        const emojiEl  = document.getElementById('modalEmoji');
+        msgEl.style.color = "#6b4423";
 
         if (spinCount >= 2) {
             state.amount = 10;
             state.status = "Blocked";
-            document.getElementById('greetHead').innerText = "Blocked!";
-            document.getElementById('msgText').innerText = "areeh beta beshi spin korar jonno tomake block kora holo!";
-            document.getElementById('msgText').style.color = "red";
+            greetEl.innerText   = "Blocked! 🚫";
+            msgEl.innerText     = "areeh beta beshi spin korar jonno tomake block kora holo!";
+            msgEl.style.color   = "red";
+            emojiEl.innerText   = "😤";
             document.getElementById('trollSound').play();
             fireCelebration();
         } else {
             calculateLogic();
-            if(state.amount === 6.9) document.getElementById('trollSound').play();
-            else { document.getElementById('winSound').play(); fireCelebration(); }
+            if (state.amount === 6.9) {
+                greetEl.innerText = "EID MUBARAK! 🐑";
+                msgEl.innerText   = "Abir has a special surprise for you:";
+                emojiEl.innerText = "😏";
+                document.getElementById('trollSound').play();
+            } else {
+                greetEl.innerText = "EID MUBARAK! 🎉";
+                msgEl.innerText   = "Abir sent you a Qurbani gift:";
+                emojiEl.innerText = "🐑";
+                document.getElementById('winSound').play();
+                fireCelebration();
+            }
         }
 
         document.getElementById('amtOut').innerText = "৳ " + state.amount;
@@ -207,37 +505,41 @@
         const r = Math.random() * 100;
         let base = 0;
 
-        if(!isF) {
-            if(r < 6.9) base = 6.9;
-            else if(r < 20) base = 10;
-            else if(r < 70) base = 20;
-            else if(r < 90) base = 25;
-            else if(r < 91) base = 50;
-            else base = 30;
+        if (!isF) {
+            if (r < 6.9)      base = 6.9;
+            else if (r < 20)  base = 10;
+            else if (r < 70)  base = 20;
+            else if (r < 90)  base = 25;
+            else if (r < 91)  base = 50;
+            else              base = 30;
         } else {
-            if(r < 50) base = 30;
-            else if(r < 80) base = 25;
-            else if(r < 90) base = 20;
-            else base = Math.floor(Math.random() * (60 - 15 + 1)) + 15;
+            if (r < 50)       base = 30;
+            else if (r < 80)  base = 25;
+            else if (r < 90)  base = 20;
+            else              base = Math.floor(Math.random() * (60 - 15 + 1)) + 15;
         }
         state.amount = addNaturalJitter(base);
     }
 
     async function submitRequest() {
         const bk = document.getElementById('bkIn').value;
-        if(bk.length < 11) return alert("Enter 11 digit bKash number!");
-        document.getElementById('subBtn').innerText = "PROCESSING...";
-        document.getElementById('subBtn').disabled = true;
+        if (bk.length < 11) return alert("Enter 11 digit bKash number!");
+        const btn = document.getElementById('subBtn');
+        btn.innerText = "⏳ PROCESSING...";
+        btn.disabled = true;
         await fetch(URL, { method: "POST", mode: "no-cors", body: JSON.stringify({...state, bkash: bk}) });
-        alert("Abir is sending ৳" + state.amount + " to your bKash!");
+        alert("Abir is sending ৳" + state.amount + " to your bKash! 🎊");
         location.reload();
     }
 
+    // Load leaderboard
     fetch(URL).then(r => r.json()).then(data => {
         let h = "";
-        data.slice(0, 5).forEach(x => h += `<div class="lb-row"><span>${x.name}</span><b>৳${x.amount}</b></div>`);
-        document.getElementById('lbList').innerHTML = h || "No winners yet!";
-    }).catch(e => document.getElementById('lbList').innerHTML = "Ready for winners!");
+        data.slice(0, 5).forEach(x => {
+            h += `<div class="lb-row"><span class="lb-name">${x.name}</span><b class="lb-amt">৳${x.amount}</b></div>`;
+        });
+        document.getElementById('lbList').innerHTML = h || '<div style="opacity:0.5;padding:16px;">No winners yet!</div>';
+    }).catch(() => document.getElementById('lbList').innerHTML = '<div style="opacity:0.5;padding:16px;">Ready for winners!</div>');
 </script>
 </body>
 </html>
